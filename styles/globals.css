@@ -1,16 +1,19 @@
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.dashIcon {
+    @apply flex justify-center cursor-pointer w-20
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+.dashText {
+    @apply font-semibold col-span-2 ml-1.5 hidden lg:inline-block cursor-pointer
 }
 
-* {
-  box-sizing: border-box;
+.main {
+    @apply flex items-center my-4
+}
+
+.button {
+    @apply px-5 md:px-7 py-2 bg-sky-600 text-white rounded-full font-semibold
 }
