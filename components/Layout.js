@@ -11,7 +11,7 @@ const Layout = ({ children }) => {
         const Auth = async () => {
             const res = await checkAuth()
             if(res?.auth) {
-                setUser(res.user)
+                setUser(res?.user)
             }
         }
         Auth()

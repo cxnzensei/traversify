@@ -5,22 +5,15 @@ import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import pageTransition from '../../utils/pageTransition'
 
-export default function Home() {
+export default function Home({ token }) {
   const [auth, setAuth] = useState(false)
   const [user, setUser] = useState(null)
-  const [token, setToken] = useState(false)
 
   
   const checkAuth = async () => {
     try {
-      const token = localStorage.getItem('token')
-      setToken(true)
       if(token) {
-        const user = await axios.get("http://localhost:3000/api/auth/verify", {
-          headers: {
-            "token": token
-          }
-        })
+        const user = await axios.get("http://localhost:3000/api/auth/verify")
         if(user?.data?.auth) {
           setAuth(true)
           setUser(user?.data?.user)
@@ -60,4 +53,13 @@ export default function Home() {
       }
     </motion.div>
   )
+}
+
+export async function getServerSideProps ({ req }) {
+  const { cookies } = req
+  return {
+      props: {
+        "token": cookies.token,
+      }
+  }
 }

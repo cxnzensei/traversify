@@ -2,7 +2,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { useRouter } from "next/router"
 const axios = require('axios').default;
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import Head from "next/head"
 import Icon from "@mdi/react"
 import { mdiArrowLeftCircle } from "@mdi/js"

@@ -14,6 +14,8 @@ import {
 } from '@mdi/js';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import axios from 'axios';
+import Toastify from 'toastify-js'
 
 const Sidebar = ({ user }) => {
 
@@ -21,7 +23,7 @@ const Sidebar = ({ user }) => {
 
     const items = [
         { path: mdiHome, text: 'Home', link: '/' },
-        { path: mdiCardAccountDetailsOutline, text: 'Profile', link: `/traversify/${user?.user_id}` },
+        { path: mdiCardAccountDetailsOutline, text: 'Profile', link: `/users/${user?.user_id}` },
         { path: mdiBookHeart, text: 'Readlist', link: '/readlist' },
         { path: mdiClockTimeThreeOutline, text: 'History', link: '' },
         { path: mdiNoteMultiple, text: 'Tasks', link: '' },
@@ -46,9 +48,9 @@ const Sidebar = ({ user }) => {
                     </Link>
                     <div className='mt-12'>
                         {items.map(item => (
-                            <div key={item.text} onClick={() => {
+                            <div key={item.text} onClick={async () => {
                                 if(item.text === 'Logout') {
-                                    localStorage.setItem('token', null)
+                                    const res = await axios.get('/api/auth/logout')
                                     router.push('/login')
                                 }
                             }}>

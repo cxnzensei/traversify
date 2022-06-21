@@ -3,8 +3,9 @@ require('dotenv').config();
 
 const authorization = (handler) => {
     return async (req, res) => {
+        const { cookies } = req
         try {
-            const jwtToken = req.headers["token"];
+            const jwtToken = cookies.token
             if(jwtToken === null) {
                 res.status(403).json({ message: "Not Authorized", "auth": false })
             } 

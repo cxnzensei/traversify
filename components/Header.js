@@ -41,9 +41,6 @@ const Header = ({ user }) => {
                             <p>{greet}</p>
                             <p>{`${fullname} (@${username})`}</p>
                         </div>
-                        {/* <div>
-                            <Image className="object-contain" src={`/assets/hp_badges/${user.house}.png`} width={100} height={100} alt="slytherin badge" />
-                        </div> */}
                     </div>
                 </div>
             </div>

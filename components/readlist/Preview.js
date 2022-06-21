@@ -42,6 +42,7 @@ const Preview = ({ book, readList, setBook, setReadList }) => {
     
     const addToShelf = async () => {
         let obj = {...book, startDate: start, endDate: end}
+        console.log(obj)
         try {
             const response = await axios.post('http://localhost:3000/api/books', obj, {
                 headers: {

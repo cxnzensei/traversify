@@ -7,6 +7,7 @@ async function getBooks (req, res) {
     let response;
 
     console.log(body)
+
     
     switch (method) {
         case 'GET':

@@ -1,7 +1,6 @@
 const pool = require('../../../postgresql/db')
 const bcrypt = require('bcrypt')
 const jwtGenerator = require('../../../utils/jwt')
-const validInfo = require('../../../middlewares/validInfo')
 
 export default async function register(req, res) {
     const { method, body } = req
@@ -28,7 +27,7 @@ export default async function register(req, res) {
                     const bcryptpasskey = await bcrypt.hash(passkey, salt)
     
                     const newUser = await pool.query("insert into users(username, email, passkey, firstname, lastname) values($1, $2, $3, $4, $5) returning *", [username, email, bcryptpasskey, firstname, lastname])
-    
+
                     const token = jwtGenerator(newUser.rows[0].user_id);
     
                     res.status(200).json({ "token" : token })

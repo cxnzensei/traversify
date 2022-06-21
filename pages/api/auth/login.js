@@ -1,7 +1,7 @@
 const pool = require('../../../postgresql/db')
 const bcrypt = require('bcrypt')
+import { serialize } from 'cookie'
 const jwtGenerator = require('../../../utils/jwt')
-const validInfo = require('../../../middlewares/validInfo')
 
 export default async function login (req, res) {
     const { body, method } = req
@@ -10,6 +10,11 @@ export default async function login (req, res) {
     switch (method) {
         case 'POST':
             try {
+
+                if(email.length === 0 || passkey.length === 0) {
+                    return res.status(401).json({ message: "Missing Credentials. Enter Email and Password correctly" })
+                }
+
                 const userCheck = await pool.query("select * from users where email = $1", [email])
                 if(userCheck.rowCount === 0) {
                     return res.status(401).json({ message: "Email or password is incorrect" })
@@ -21,9 +26,26 @@ export default async function login (req, res) {
                 }
 
                 const userID = userCheck.rows[0].user_id;
+                const user = userCheck.rows[0]
                 const token = jwtGenerator(userID)
 
-                res.json({ "token": token })
+                const tokenCookie = serialize('token', token, {
+                    httpOnly: true,
+                    sameSite: 'strict',
+                    maxAge: 60*60*24*30,
+                    path: '/'
+                })
+
+                const userCookie = serialize('user', userID, {
+                    httpOnly: true,
+                    sameSite: 'strict',
+                    maxAge: 60*60*24*30,
+                    path: '/'
+                })
+
+                res.setHeader('Set-Cookie', [tokenCookie, userCookie])
+
+                res.json({ "message": "You have been logged in" })
             } 
             
             catch (error) {

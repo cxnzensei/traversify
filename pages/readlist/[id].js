@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import axios from "axios"
 import Head from "next/head"
 import Icon from "@mdi/react"
@@ -7,10 +6,21 @@ import { motion } from "framer-motion"
 import pageTransition from "../../utils/pageTransition"
 import { useRouter } from 'next/router'
 import Image from 'next/image'
+import Link from "next/link"
 
 const SingleBook = ({ book }) => {
 
     const router = useRouter()
+
+    const deleteBook = async (ID) => {
+        try {
+            await axios.delete(`http://localhost:3000/api/books/${ID}`)
+            router.push('/readlist')
+        } 
+        catch (error) {
+            console.log(error.message)
+        }
+    }
 
     return (
         <motion.div
@@ -47,9 +57,13 @@ const SingleBook = ({ book }) => {
                                 <div className="border p-4 rounded-b-lg">{book.enddate}</div>
                             </div>
                         </div>
-                        <div className="flex items-center space-x-4">
-                            <Icon path={mdiCircleEditOutline} size={1.2} color='green' />
-                            <Icon path={mdiDelete} size={1.2} color='red' />
+                        <div className="flex items-center space-x-4 px-4 py-2">
+                            <Link href={`/edit/${book.book_id}`}>
+                                <Icon className="hover:scale-105 duration-300 ease-in-out" path={mdiCircleEditOutline} size={1.2} color='green' />
+                            </Link>
+                            <div onClick={() => deleteBook(book.book_id)}>
+                                <Icon className="hover:scale-105 duration-300 ease-in-out" path={mdiDelete} size={1.2} color='red' />
+                            </div>
                         </div>
                     </div>
                 </div>

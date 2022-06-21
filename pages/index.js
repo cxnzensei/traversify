@@ -1,6 +1,5 @@
 import Head from 'next/head'
 import Main from '../components/Main'
-import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import pageTransition from '../utils/pageTransition'
@@ -9,7 +8,7 @@ import checkAuth from '../utils/checkAuth'
 export default function Home() {
   const [auth, setAuth] = useState(false)
   const [user, setUser] = useState(null)
-  
+
   const Auth = async () => {
     try {
       const res = await checkAuth()
@@ -45,7 +44,7 @@ export default function Home() {
       </Head>
       {
         (auth) && (
-            <Main user={user} />
+          <Main user={user} />
         )
       }
     </motion.div>

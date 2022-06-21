@@ -1,9 +1,6 @@
 import Header from "./Header"
 import Announcements from "./Announcements"
 import Trending from "./Trending"
-import { useState } from "react"
-import axios from "axios"
-import { useEffect } from "react"
 
 const Main = ({ user }) => {
   return (
