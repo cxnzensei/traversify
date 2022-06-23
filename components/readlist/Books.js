@@ -46,7 +46,7 @@ const Books = ({ readList, setReadList }) => {
                                         </div>
                                     </Link>
                                     <div className='flex items-center justify-end space-x-3'>
-                                        <Link href={`/edit/${book.book_id}`}>
+                                        <Link href={`/editBook/${book.book_id}`}>
                                             <Icon className='hover:scale-110 duration-100 ease-in-out' path={mdiCircleEditOutline} size={1} color='green' />
                                         </Link>
                                         <div onClick={() => removeBook(book.book_id)}>
