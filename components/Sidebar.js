@@ -15,11 +15,22 @@ import {
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import axios from 'axios';
+import { useState, useEffect } from 'react';
+import checkAuth from '../utils/checkAuth';
 import Toastify from 'toastify-js'
 
-const Sidebar = ({ user }) => {
+const Sidebar = () => {
 
     const router = useRouter()
+    const [user, setUser] = useState(null)
+
+    useEffect(() => {
+        const Auth = async () => {
+            const res = await checkAuth()
+            setUser(res?.user)
+        }
+        Auth()
+    }, [])
 
     const items = [
         { path: mdiHome, text: 'Home', link: '/' },
